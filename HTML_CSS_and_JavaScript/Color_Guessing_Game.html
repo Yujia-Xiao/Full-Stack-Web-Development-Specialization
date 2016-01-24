@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Homework for HTML, CSS & JavaScript Week2</title>
+  <meta name="description" content="HTML, CSS & JavaScript Week2 HW" charset="UTF-8">
+  <style>
+
+  </style>
+</head>
+
+<body onload="GuessGame()";>
+
+    <script>
+        function GuessGame(){
+            var random = Math.random()*9;
+            var target_index = Math.floor(random);
+            var colors=["Aqua","BlueViolet","Fuchsia","GreenYellow",
+            "LightBlue","LightPink","Magenta","MediumPurple","MistyRose"];
+            var target_color=colors[target_index];
+            alert(target_color);
+            var guess_num = 0;
+            do{
+                guess_input=prompt(
+                "I am thinking of one of these colors:\n"
+                +"\n"+colors+"\n"
+                +"What color am I thinking of?"
+                );
+                guess_num++;
+                if(colors.indexOf(guess_input)==-1){
+                    alert(
+                        "Sorry, I don't recognize your color.\n"
+                        +"Please try again."
+                    );
+                    continue;
+                }
+                var hint = "same";
+                if(guess_input!=target_color){
+                    if(guess_input>target_color)hint="larger";
+                    else hint="lower";
+                    alert(
+                        "Sorry, your guess is not correct!\n"
+                        +"Hint: your color is alphabetically "+hint+" than mine.\n"
+                        +"Please try again."
+                    );
+                }
+            }while(guess_input!=target_color);
+
+            alert(
+            "Congratulations! You have guessed the color!\n"
+            +"It took you "+guess_num+"guesses to finish the game!\n"
+            +"You can see the color in the background."
+            );
+            myBody=document.getElementsByTagName("body")[0];
+            myBody.style.background=target_color;
+
+        }
+    </script>
+</bo
