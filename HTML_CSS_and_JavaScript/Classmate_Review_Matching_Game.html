@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matching Game 4</title>
+    <style>
+    div {
+        float: left;
+        width: 500px;
+        height: 500px;
+        position:absolute;
+    }
+    .left-div {
+        background-color: lightYellow;
+    }
+    .right-div {
+        left:501px;
+        background-color: linen;
+        border-left: 1px solid black;
+    }
+    img {
+        position:absolute;
+    }
+    </style>
+    <script>
+        var numberOfFaces = 5;
+        function generateFaces(numberOfFaces) {
+            var rdn_x = 0;
+            var rdn_y = 0;
+            theLeftSide = document.getElementById("leftSide");
+            for (var i=0; i < numberOfFaces; i++) {
+                rdn_x = Math.floor(Math.random()*401);
+                rdn_y = Math.floor(Math.random()*401);
+                this_img = document.createElement("img");
+                this_img.src="http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+                theLeftSide.appendChild(this_img);
+                this_img.style.left = rdn_x + "px";
+                this_img.style.top = rdn_y + "px";
+            }
+            attachImageHandler(this_img);
+            genRightSide(theLeftSide);
+        }
+        function genRightSide(theLeftSide) {
+            theRightSide = document.getElementById("rightSide");
+            var rightSideImages = theLeftSide.cloneNode(true);
+            rightSideImages.removeChild(rightSideImages.lastChild);
+            theRightSide.appendChild(rightSideImages);
+        }
+        function imageClicked(event) {
+            event.stopPropagation();
+            while (theLeftSide.firstChild) 
+                theLeftSide.removeChild(theLeftSide.firstChild);
+            numberOfFaces += 5;
+            generateFaces(numberOfFaces);
+            
+        }
+        function gameOver(event) {
+            alert("Game Over!");
+            theBody.onclick = null;
+            theLeftSide.lastChild.onclick = null;
+        }
+        function attachImageHandler(this_img) {
+            
+            this_img.onclick = imageClicked;
+        }
+        function attachBodyHandler() {
+            theBody=document.getElementsByTagName("body")[0];
+            theBody.onclick = gameOver;
+        }
+        function init() {
+            attachBodyHandler();
+            generateFaces(numberOfFaces);
+        }
+    </script>
+</head>
+
+<body onload="init()">
+    <h1>Matching Game</h1>
+    <p>Click on the extra smiling face on the left.</p>
+    <div id="leftSide" class="left-div" >
+    </div>
+    <div id="rightSide" class="right-div">
+    </div>
+</body>
+</html>

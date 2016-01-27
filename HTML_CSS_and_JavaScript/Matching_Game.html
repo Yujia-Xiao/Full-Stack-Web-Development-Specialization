@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>Homework for HTML, CSS &amp; JavaScript Week1</title>
+    <meta name="description" content="HTML, CSS &amp; JavaScript Week1 HW" charset="UTF-8">
+    <style>
+    img{
+        position:absolute;
+    }
+    div{
+        position:absolute;
+        width:500px;
+        height:500px;
+    }
+    #rightSide{
+        left:500px;
+        border-left:1px solid black;
+        border-right:1px solid black;
+    }
+
+    </style>
+    <script type="text/javascript">
+        var numberOfFaces=5;
+        var generateFaces = function(){
+            var parser=new DOMParser();
+            var divLeftSide=document.getElementById("leftSide");     
+            for(i=0;i<numberOfFaces;i++){
+                // var tmpImg='\
+                // <img src="smile.png" \
+                //     style="left:'+Math.ceil(Math.random()*400)+'px; top:'+Math.ceil(Math.random()*400)+'px;"\
+                // />';
+                //divLeftSide.appendChild(parser.parseFromString(tmpImg,"text/xml").firstChild);
+                var face = document.createElement("img");
+                //face.src="smile.png";
+                face.src="http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+                face.style.left=Math.ceil(Math.random()*400)+"px";
+                face.style.top=Math.ceil(Math.random()*400)+"px";
+                console.log(face.style.left+" "+face.style.top);
+                divLeftSide.appendChild(face);
+                
+            }
+            //var LeftParent = document.getElementById("leftSide");
+            console.log(divLeftSide);
+            var divRightSide=divLeftSide.cloneNode(true);
+            console.log(divRightSide);
+            divRightSide.id="rightSide";
+            var parentFrame=divLeftSide.parentElement;
+            parentFrame.appendChild(divRightSide);
+            console.log(divRightSide);
+            divRightSide.removeChild(divRightSide.lastChild);
+
+            var theBody = document.getElementsByTagName("body")[0];
+            divLeftSide.lastChild.onclick=function nextLevel(event){
+                event.stopPropagation();
+                numberOfFaces+=5;
+                while(divLeftSide.firstChild)divLeftSide.removeChild(divLeftSide.lastChild);
+                while(divRightSide.firstChild)divRightSide.removeChild(divRightSide.lastChild);
+                generateFaces();
+            }
+            theBody.onclick=function gameOver(){
+                alert("Game Over!");
+                theBody.onclick=null;
+                divLeftSide.lastChild.onclick=null;
+
+            }
+
+        }
+    </script>
+</head>
+<body onload="generateFaces()">
+    <h1>Matching Game</h1>
+    <p>Click on the extra smiling face on the left</p>
+    <div id="leftSide"></div>
+</body>
+
+</html>
